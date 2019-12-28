@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="App3.Views.NewItemPage"
+             Title="New Item">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" AutomationId="Cancel" Clicked="Cancel_Clicked" IconImageSource="cancel.png" />
+        <ToolbarItem Text="Save" AutomationId="Save" Clicked="Save_Clicked" IconImageSource="save.png" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Grid x:Name="progressGrid" Grid.Row="0" Grid.Column="0" Padding="10,0,10,0" IsVisible="False">
+                <ProgressBar x:Name="progressBar" BackgroundColor="Transparent"  Progress="0.00"  HorizontalOptions="FillAndExpand" HeightRequest="20"/>
+                <Label x:Name="progressName" Text="Saving..." Margin="80,0,0,0"></Label>
+            </Grid>           
+            <Label Text="Text" FontSize="Medium" />
+            <Entry Text="{Binding Item.Text}" AutomationId="ItemText" d:Text="Item name" FontSize="Small" />
+            <Label Text="Description" FontSize="Medium" />
+            <Editor Text="{Binding Item.Description}" AutomationId="ItemDescription" d:Text="Item description" FontSize="Small" Margin="0" />
+
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
