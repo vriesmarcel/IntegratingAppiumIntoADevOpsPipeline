@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace App3.iOS
+namespace CarvedRock.iOS
 {
     public class Application
     {

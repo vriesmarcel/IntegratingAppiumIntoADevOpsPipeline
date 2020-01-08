@@ -1,10 +1,10 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using App3.Services;
-using App3.Views;
+using CarvedRock.Services;
+using CarvedRock.Views;
 
-namespace App3
+namespace CarvedRock
 {
     public partial class App : Application
     {

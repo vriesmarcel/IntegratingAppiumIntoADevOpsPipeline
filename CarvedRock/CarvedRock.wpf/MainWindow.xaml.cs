@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WPF;
-namespace App3.wpf
+namespace CarvedRock.wpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace App3.UITests
+namespace CarvedRock.UITests
 {
     [TestClass]
     public class WindowsUWPTests

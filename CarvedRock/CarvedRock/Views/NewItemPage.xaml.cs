@@ -4,10 +4,10 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using App3.Models;
+using CarvedRock.Models;
 using System.Threading;
 
-namespace App3.Views
+namespace CarvedRock.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer

@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace App3.UWP
+namespace CarvedRock.UWP
 {
     public sealed partial class MainPage
     {
@@ -21,7 +21,7 @@ namespace App3.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new App3.App());
+            LoadApplication(new CarvedRock.App());
         }
     }
 }

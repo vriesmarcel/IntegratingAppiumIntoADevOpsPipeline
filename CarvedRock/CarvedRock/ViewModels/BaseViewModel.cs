@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
 
-using App3.Models;
-using App3.Services;
+using CarvedRock.Models;
+using CarvedRock.Services;
 
-namespace App3.ViewModels
+namespace CarvedRock.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace App3.Services
+namespace CarvedRock.Services
 {
     public interface IDataStore<T>
     {

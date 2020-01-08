@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
-using App3.Models;
-using App3.Views;
+using CarvedRock.Models;
+using CarvedRock.Views;
 
-namespace App3.ViewModels
+namespace CarvedRock.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {

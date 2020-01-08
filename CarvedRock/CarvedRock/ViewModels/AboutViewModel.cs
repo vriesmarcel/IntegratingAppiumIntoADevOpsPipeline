@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace App3.ViewModels
+namespace CarvedRock.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {

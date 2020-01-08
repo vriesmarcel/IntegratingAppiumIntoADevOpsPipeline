@@ -9,9 +9,9 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{65C0771A-452F-423B-995C-F0AE46E643BA}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>App3.iOS</RootNamespace>
+    <RootNamespace>CarvedRock.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>App3.iOS</AssemblyName>
+    <AssemblyName>CarvedRock.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
   </PropertyGroup>
@@ -60,6 +60,9 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -138,12 +141,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\App3\App3.csproj">
-      <Project>{FFE3E809-E095-4BC1-ABB5-D32425C35FBC}</Project>
-      <Name>App3</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\add.png" />
     <BundleResource Include="Resources\cancel.png" />
     <BundleResource Include="Resources\Default.png" />
@@ -152,5 +149,11 @@
     <BundleResource Include="Resources\Default-Portrait.png" />
     <BundleResource Include="Resources\Default-Portrait%402x.png" />
     <BundleResource Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarvedRock\CarvedRock.csproj">
+      <Project>{06ad4217-ac39-4967-ab83-21d945376d1b}</Project>
+      <Name>CarvedRock</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

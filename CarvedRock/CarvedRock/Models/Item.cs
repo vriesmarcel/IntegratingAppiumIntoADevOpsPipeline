@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App3.Models
+namespace CarvedRock.Models
 {
     public class Item
     {

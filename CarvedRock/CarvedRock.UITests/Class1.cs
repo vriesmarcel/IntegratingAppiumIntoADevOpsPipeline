@@ -1,4 +1,4 @@
-﻿namespace App3.UITests
+﻿namespace CarvedRock.UITests
 {
     using System;
 

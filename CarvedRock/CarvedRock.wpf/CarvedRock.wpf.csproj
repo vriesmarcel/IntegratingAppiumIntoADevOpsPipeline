@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App3\App3.csproj" />
+    <ProjectReference Include="..\CarvedRock\CarvedRock.csproj" />
   </ItemGroup>
 
 </Project>

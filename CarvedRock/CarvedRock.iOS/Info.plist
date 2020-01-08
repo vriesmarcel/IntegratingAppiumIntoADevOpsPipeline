@@ -23,15 +23,15 @@
     <key>MinimumOSVersion</key>
     <string>8.0</string>
     <key>CFBundleDisplayName</key>
-    <string>App3</string>
+    <string>CarvedRock</string>
     <key>CFBundleIdentifier</key>
-    <string>com.companyname.App3</string>
+    <string>com.fluentbytes.carvedrock</string>
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>CFBundleName</key>
-    <string>App3</string>
+    <string>CarvedRock</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>

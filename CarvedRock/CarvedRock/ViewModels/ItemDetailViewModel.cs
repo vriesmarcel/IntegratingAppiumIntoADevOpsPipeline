@@ -1,8 +1,8 @@
 ﻿using System;
 
-using App3.Models;
+using CarvedRock.Models;
 
-namespace App3.ViewModels
+namespace CarvedRock.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {

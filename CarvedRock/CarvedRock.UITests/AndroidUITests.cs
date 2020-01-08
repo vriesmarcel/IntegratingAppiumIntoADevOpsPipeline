@@ -8,11 +8,12 @@ using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace App3.UITests
+namespace CarvedRock.UITests
 {
     [TestClass]
     public class AndroidUITests
@@ -29,8 +30,8 @@ namespace App3.UITests
 
             var capabilities = new AppiumOptions();
             //capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "5.0.1");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "com.companyname.app3");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, "crc64a97741fd0943fb9c.MainActivity");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "com.fluentbytes.carvedrock");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, "crc641782d5af3c9cf50a.MainActivity");
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.Avd, "demo_device");
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AvdArgs, "-no-boot-anim -no-snapshot-load");
             //capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AndroidCoverage, "false");
@@ -40,7 +41,7 @@ namespace App3.UITests
           
             var currentPath = Directory.GetCurrentDirectory();
             Console.WriteLine($"Current path: {currentPath}");
-            var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.companyname.app3-x86.apk");
+            var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-x86.apk");
             packagePath = Path.GetFullPath(packagePath);
             Console.WriteLine($"Package path: {packagePath}");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, packagePath);
@@ -104,15 +105,10 @@ namespace App3.UITests
             var elSave = driver.FindElementByAccessibilityId("Save");
             elSave.Click();
 
-            var scrollableElement = driver.FindElementByClassName("android.widget.ListView");
-            new TouchAction(driver).Press(200,200).Wait(2).MoveTo(200,0).Release();
+            //var scrollableElement = driver.FindElementByClassName("android.widget.ListView");
+            //new TouchAction(driver).Press(200,200).Wait(2).MoveTo(200,0).Release();
 
-            //Dictionary<string, string> scrollObject = new Dictionary<string, string>
-            //{
-            //    { "direction", "up" },
-            //    { "element", scrollableElement.Id }
-            //};
-            //((IJavaScriptExecutor)driver).ExecuteScript("mobile: scrollBackTo", scrollObject);
+            WaitForProgressbarToDisapear(driver);
 
 
             var el3 = driver.FindElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
@@ -134,6 +130,18 @@ namespace App3.UITests
             .Release();
 
             touchAction.Perform();
+        }
+
+        private void WaitForProgressbarToDisapear(AndroidDriver<AppiumWebElement> driver)
+        {
+            var wait = new DefaultWait<AndroidDriver<AppiumWebElement>>(driver)
+            {
+                Timeout = TimeSpan.FromSeconds(60),
+                PollingInterval = TimeSpan.FromMilliseconds(500)
+            };
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+
+            wait.Until(d => d.FindElementByAccessibilityId("Second item"));
         }
     }
 }

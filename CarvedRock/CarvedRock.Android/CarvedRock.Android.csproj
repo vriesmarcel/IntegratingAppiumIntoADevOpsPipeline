@@ -7,8 +7,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{9AA2D3C6-3393-45F1-8E7C-5A9901728795}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>App3.Droid</RootNamespace>
-    <AssemblyName>App3.Android</AssemblyName>
+    <RootNamespace>CarvedRock.Droid</RootNamespace>
+    <AssemblyName>CarvedRock.Android</AssemblyName>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -92,15 +92,15 @@
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\App3\App3.csproj">
-      <Project>{FFE3E809-E095-4BC1-ABB5-D32425C35FBC}</Project>
-      <Name>App3</Name>
-    </ProjectReference>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\add.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\cancel.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\mipmap-xxxhdpi\add.png" />
-    <Content Include="Resources\mipmap-xxxhdpi\cancel.png" />
-    <Content Include="Resources\mipmap-xxxhdpi\save.png" />
+    <ProjectReference Include="..\CarvedRock\CarvedRock.csproj">
+      <Project>{06ad4217-ac39-4967-ab83-21d945376d1b}</Project>
+      <Name>CarvedRock</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

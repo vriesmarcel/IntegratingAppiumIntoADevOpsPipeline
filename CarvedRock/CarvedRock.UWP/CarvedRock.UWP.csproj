@@ -8,8 +8,8 @@
     <TemplateGuid>{98C37F10-6541-44BE-B1E6-7EB3EB8C08F1}</TemplateGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App3.UWP</RootNamespace>
-    <AssemblyName>App3.UWP</AssemblyName>
+    <RootNamespace>CarvedRock.UWP</RootNamespace>
+    <AssemblyName>CarvedRock.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
@@ -173,9 +173,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\App3\App3.csproj">
-      <Project>{FFE3E809-E095-4BC1-ABB5-D32425C35FBC}</Project>
-      <Name>App3</Name>
+    <ProjectReference Include="..\CarvedRock\CarvedRock.csproj">
+      <Project>{06ad4217-ac39-4967-ab83-21d945376d1b}</Project>
+      <Name>CarvedRock</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
