@@ -27,9 +27,10 @@ namespace CarvedRock.Views
             BindingContext = viewModel = new ItemsViewModel();
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
-        {
-            var item = args.SelectedItem as Item;
+
+       async void OnSelectionChangedCommand(object sender, SelectionChangedEventArgs args)
+       {
+            var item = args.CurrentSelection.FirstOrDefault() as Item;
             if (item == null)
                 return;
 

@@ -19,7 +19,8 @@
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
                 ItemSizingStrategy="MeasureAllItems"
-                SelectedItem="OnItemSelected"
+                SelectionMode="Single"
+                SelectionChanged ="OnSelectionChangedCommand"
                 AutomationId="ItemsListView">
 
             <d:CollectionView.ItemsSource>
