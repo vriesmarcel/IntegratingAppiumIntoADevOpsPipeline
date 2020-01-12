@@ -48,7 +48,7 @@ namespace CarvedRock.iOS.Native
 
         void AddNewItem(object sender, EventArgs args)
         {
-            this.NavigationController.PushViewController(new AddNewItemViewController(), true);
+            this.NavigationController.PushViewController(new AddNewItemViewController(this.Handle, this), true);
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)

@@ -59,12 +59,16 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AddNewItemViewController.cs.cs" />
+    <Compile Include="AddNewItemViewController.cs.designer.cs">
+      <DependentUpon>AddNewItemViewController.cs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="SceneDelegate.cs" />
+    <InterfaceDefinition Include="EmptyStoryboard1.storyboard" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AddNewItemViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DetailViewController.cs" />
