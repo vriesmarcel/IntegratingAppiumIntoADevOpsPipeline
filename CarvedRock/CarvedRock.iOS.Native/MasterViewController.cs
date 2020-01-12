@@ -49,6 +49,7 @@ namespace CarvedRock.iOS.Native
         void AddNewItem(object sender, EventArgs args)
         {
             var newItemcontroller = Storyboard.InstantiateViewController("NewItem") as AddNewItemViewController;
+            newItemcontroller.Parent = this;
             this.NavigationController.PushViewController(newItemcontroller, true);
         }
 

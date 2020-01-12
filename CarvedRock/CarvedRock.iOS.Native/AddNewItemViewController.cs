@@ -8,12 +8,13 @@ namespace CarvedRock.iOS.Native
 {
     public partial class AddNewItemViewController : UIViewController
     {
-        UITableViewController parent = null;
-        public AddNewItemViewController (IntPtr handle, MasterViewController masterViewController) : base (handle)
+        private UITableViewController _parent = null;
+        public AddNewItemViewController (IntPtr handle) : base (handle)
         {
-            parent = masterViewController;
+           
         }
 
+        public UITableViewController Parent { get; set; }
         partial void UIButton576_TouchUpInside(UIButton sender)
         {
             var newItem = new Item()
@@ -24,7 +25,7 @@ namespace CarvedRock.iOS.Native
             };
 
             var success = new MockDataStore().AddItemAsync(newItem).Result;
-            parent.NavigationController.DismissViewController(true, null);
+            _parent.NavigationController.DismissViewController(true, null);
         }
     }
 }

@@ -59,9 +59,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddNewItemViewController.cs.cs" />
-    <Compile Include="AddNewItemViewController.cs.designer.cs">
-      <DependentUpon>AddNewItemViewController.cs.cs</DependentUpon>
+    <Compile Include="AddNewItemViewController.cs" />
+    <Compile Include="AddNewItemViewController.designer.cs">
+      <DependentUpon>AddNewItemViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
