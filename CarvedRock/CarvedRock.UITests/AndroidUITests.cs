@@ -38,7 +38,7 @@ namespace CarvedRock.UITests
             capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "demo_device");
             capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, "UiAutomator2");
-          
+
             var currentPath = Directory.GetCurrentDirectory();
             Console.WriteLine($"Current path: {currentPath}");
             var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-x86.apk");
@@ -51,7 +51,7 @@ namespace CarvedRock.UITests
             //_appiumLocalService.Start(); ;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-     
+
         }
         [ClassCleanup]
         static public void CleanUp()
@@ -72,11 +72,11 @@ namespace CarvedRock.UITests
             a.Tap(el1);
 
             el1.Click();
-            var el2= driver.FindElementByAccessibilityId("ItemText");
+            var el2 = driver.FindElementByAccessibilityId("ItemText");
             Assert.IsTrue(el2.Text == "Second item");
 
             driver.PressKeyCode(AndroidKeyCode.Back);
-            
+
             var el3 = driver.FindElementByAccessibilityId("Fourth item");
             Assert.IsTrue(el3 != null);
 
@@ -104,17 +104,31 @@ namespace CarvedRock.UITests
 
             var elSave = driver.FindElementByAccessibilityId("Save");
             elSave.Click();
-
-            //var scrollableElement = driver.FindElementByClassName("android.widget.ListView");
-            //new TouchAction(driver).Press(200,200).Wait(2).MoveTo(200,0).Release();
-
             WaitForProgressbarToDisapear(driver);
 
+            var scrollableElement = driver.FindElementByClassName("android.widget.ListView");
+            //new TouchAction(driver).Press(200,200).Wait(2).MoveTo(200,0).Release();
 
-            var el3 = driver.FindElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
-                                + "new UiSelector().text(\"This is a new Item\"));");
 
-            Assert.IsTrue(el3 != null);
+
+            Func<AppiumWebElement> FindElementAction = () =>
+            {
+                // find all text views
+                // check if the text matches
+                var elements = driver.FindElementsByClassName("android.widget.TextView");
+               foreach(var textView in elements)
+                {
+                    if (textView.Text == "This is a new Item")
+                        return textView;
+                }
+
+                return null;
+            };
+
+            var elementFound = ScrollUntillItemFound(driver, scrollableElement, FindElementAction, 4);
+
+
+            Assert.IsTrue(elementFound != null);
 
 
             driver.CloseApp();
@@ -142,6 +156,50 @@ namespace CarvedRock.UITests
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
 
             wait.Until(d => d.FindElementByAccessibilityId("Second item"));
+        }
+
+        private AppiumWebElement ScrollUntillItemFound(AndroidDriver<AppiumWebElement> driver, AppiumWebElement relativeTo, Func<AppiumWebElement> FindElementAction, int reties)
+        {
+            var wait = new DefaultWait<AndroidDriver<AppiumWebElement>>(driver)
+            {
+                Timeout = TimeSpan.FromSeconds(60),
+                PollingInterval = TimeSpan.FromMilliseconds(1000)
+            };
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+            AppiumWebElement elementfound = null;
+
+            elementfound = wait.Until(d =>
+                         {
+                             Flick(driver, relativeTo, UpOrDown.Up);
+
+                             return FindElementAction();
+                         });
+
+            return elementfound;
+        }
+
+        private void Flick(AndroidDriver<AppiumWebElement> driver, AppiumWebElement element, UpOrDown direction)
+        {
+            int moveYDirection;
+            if (direction == UpOrDown.Down)
+                moveYDirection = 600;
+            else
+                moveYDirection = -600;
+
+            var input = new PointerInputDevice(PointerKind.Touch);
+            ActionSequence FlickUp = new ActionSequence(input);
+            FlickUp.AddAction(input.CreatePointerMove(element, 0, 0, TimeSpan.Zero));
+            FlickUp.AddAction(input.CreatePointerDown(MouseButton.Left));
+
+            FlickUp.AddAction(input.CreatePointerMove(element, 0, moveYDirection, TimeSpan.FromMilliseconds(200)));
+            FlickUp.AddAction(input.CreatePointerUp(MouseButton.Left));
+            driver.PerformActions(new List<ActionSequence>() { FlickUp });
+        }
+
+        enum UpOrDown
+        {
+            Up = 0,
+            Down
         }
     }
 }
