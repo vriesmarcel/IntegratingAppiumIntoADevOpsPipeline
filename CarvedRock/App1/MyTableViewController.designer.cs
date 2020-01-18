@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Visual Studio from the outlets and
 // actions declared in your storyboard file.
@@ -7,22 +7,19 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using UIKit;
 
-namespace CarvedRock.iOS.Native
+namespace App1
 {
-    [Register ("DetailViewController")]
-    partial class DetailViewController
+    [Register ("MyTableViewController")]
+    partial class MyTableViewController
     {
-        [Outlet]
+        [Action ("UIBarButtonItem247_Activated:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel detailDescriptionLabel { get; set; }
+        partial void UIBarButtonItem247_Activated (UIKit.UIBarButtonItem sender);
 
         void ReleaseDesignerOutlets ()
         {
-            if (detailDescriptionLabel != null) {
-                detailDescriptionLabel.Dispose ();
-                detailDescriptionLabel = null;
-            }
         }
     }
 }

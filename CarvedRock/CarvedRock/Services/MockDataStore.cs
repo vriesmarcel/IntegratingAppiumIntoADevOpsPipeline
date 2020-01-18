@@ -8,33 +8,36 @@ namespace CarvedRock.Services
 {
     public class MockDataStore : IDataStore<Item>
     {
-        readonly List<Item> items;
+        static List<Item> items;
 
         public MockDataStore()
         {
-            items = new List<Item>()
+            if (items == null)
             {
-                new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Seventh item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Eighth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Nineth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Tenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Eleventh item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Twelfth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Thirteenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Fourteenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Fifteenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Sixteenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Seventeenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Eightteenth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Twentieth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Twenty first item", Description="This is an item description." }
-            };
+                items = new List<Item>()
+                {
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Seventh item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Eighth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Nineth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Tenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Eleventh item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Twelfth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Thirteenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Fourteenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Fifteenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixteenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Seventeenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Eightteenth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Twentieth item", Description="This is an item description." },
+                    new Item { Id = Guid.NewGuid().ToString(), Text = "Twenty first item", Description="This is an item description." }
+                };
+            }
         }
 
         public async Task<bool> AddItemAsync(Item item)

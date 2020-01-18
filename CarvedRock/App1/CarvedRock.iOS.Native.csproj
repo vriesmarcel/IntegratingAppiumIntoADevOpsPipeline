@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectGuid>{58E03AAB-3490-4C1F-8698-18A2FAEB648A}</ProjectGuid>
+    <ProjectGuid>{DF674031-8827-4710-A040-563576A40B61}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TemplateGuid>{e1087329-5912-47eb-bd6a-19b74ccb7863}</TemplateGuid>
+    <TemplateGuid>{440aa056-593a-4519-8708-27081dee632f}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CarvedRock.iOS.Native</RootNamespace>
+    <RootNamespace>App1</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>CarvedRock.iOS.Native</AssemblyName>
+    <AssemblyName>App1</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -59,28 +59,48 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddNewItemViewController.cs" />
-    <Compile Include="AddNewItemViewController.designer.cs">
-      <DependentUpon>AddNewItemViewController.cs</DependentUpon>
+    <Compile Include="AddNewViewController.cs" />
+    <Compile Include="AddNewViewController.designer.cs">
+      <DependentUpon>AddNewViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="ItemDetailviewController.cs" />
+    <Compile Include="ItemDetailviewController.designer.cs">
+      <DependentUpon>ItemDetailviewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsViewSource.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="SceneDelegate.cs" />
-    <InterfaceDefinition Include="EmptyStoryboard1.storyboard" />
+    <BundleResource Include="Resources\Default.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default-Portrait.png" />
+    <BundleResource Include="Resources\Default-Portrait%402x.png" />
     <None Include="Info.plist" />
+    <Compile Include="MyTableViewController.cs" />
+    <Compile Include="MyTableViewController.designer.cs">
+      <DependentUpon>MyTableViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyUITableView.cs" />
+    <Compile Include="MyUITableView.designer.cs">
+      <DependentUpon>MyUITableView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Entitlements.plist" />
+    <InterfaceDefinition Include="LaunchScreen.storyboard" />
+    <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DetailViewController.cs" />
-    <Compile Include="DetailViewController.designer.cs">
-      <DependentUpon>DetailViewController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MasterViewController.cs" />
-    <Compile Include="MasterViewController.designer.cs">
-      <DependentUpon>MasterViewController.cs</DependentUpon>
-    </Compile>
-    <InterfaceDefinition Include="Main.storyboard" />
-    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
@@ -124,23 +144,10 @@
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Entitlements.plist" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CarvedRock\CarvedRock.csproj">
-      <Project>{06AD4217-AC39-4967-AB83-21D945376D1B}</Project>
+      <Project>{06ad4217-ac39-4967-ab83-21d945376d1b}</Project>
       <Name>CarvedRock</Name>
     </ProjectReference>
   </ItemGroup>

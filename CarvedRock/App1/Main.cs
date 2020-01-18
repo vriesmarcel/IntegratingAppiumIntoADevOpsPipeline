@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace CarvedRock.iOS.Native
+namespace App1
 {
     public class Application
     {
