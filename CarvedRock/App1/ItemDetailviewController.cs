@@ -16,7 +16,9 @@ namespace App1
         public override void ViewDidLoad()
         {
             txtItemDetail.Text = ItemText;
+            txtItemDetail.AccessibilityValue = ItemText;
             txtItemDetailDescriptionText.Text = ItemDetailText;
+            txtItemDetailDescriptionText.AccessibilityValue = ItemDetailText;
         }
     }
 }
