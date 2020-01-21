@@ -67,7 +67,7 @@
             this.txtItemText.Location = new System.Drawing.Point(44, 109);
             this.txtItemText.Name = "txtItemText";
             this.txtItemText.Size = new System.Drawing.Size(682, 31);
-            this.txtItemText.TabIndex = 3;
+            this.txtItemText.TabIndex = 1;
             // 
             // button1
             // 

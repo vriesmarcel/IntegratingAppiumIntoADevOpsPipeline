@@ -23,17 +23,21 @@ namespace CarvedRock
             base.OnLoad(e);
             FillListView();
 
-            listView1.View = View.List;
+        //    listView1.View = View.List;
             listView1.GridLines = true;
+            listView1.View = View.Details;
         }
 
         private void FillListView()
         {
             MockDataStore store = new MockDataStore();
             var items = store.GetItemsAsync().Result;
+            listView1.Items.Clear();
             foreach (var item in items)
             {
-                listView1.Items.Add(item.Text);
+                var displayItems = new string[] { item.Text, item.Description };
+                var lvItem = new ListViewItem(displayItems);
+                listView1.Items.Add(lvItem);
             }
         }
 
@@ -42,9 +46,9 @@ namespace CarvedRock
             Details frmDetail = new Details();
             if (listView1.SelectedItems.Count > 0)
             {
-                frmDetail.ItemText = listView1.SelectedItems[0].Name;
-                frmDetail.itemDetail = listView1.SelectedItems[0].Text;
-                frmDetail.ShowDialog();
+                frmDetail.ItemText = listView1.SelectedItems[0].SubItems[0].Text;
+                frmDetail.itemDetail = listView1.SelectedItems[0].SubItems[1].Text;
+                frmDetail.ShowDialog(this);
             }
         }
 
@@ -61,8 +65,8 @@ namespace CarvedRock
         private void AddNewItem()
         {
             var frmAddNewItem = new NewItemForm();
-            frmAddNewItem.ShowDialog();
-            listView1.Clear();
+            frmAddNewItem.ShowDialog(this);
+           
             FillListView();
         }
     }
