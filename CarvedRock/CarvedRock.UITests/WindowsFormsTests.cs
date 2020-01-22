@@ -59,6 +59,7 @@ namespace CarvedRock.UITests
             var column1 = row.FindElementByName("Second item");
 
             column1.Click();
+            column1.Click();
 
             //find dialog
             var dialog = driver.FindElementByAccessibilityId("Details");
