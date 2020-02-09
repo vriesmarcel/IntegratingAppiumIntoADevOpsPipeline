@@ -44,19 +44,20 @@ namespace CarvedRock.UITests
 
         }
 
-        [TestMethod]
-        public void ScrollToEndOfListUsingRemoteTouchScreenFlick()
-        {
-            driver.LaunchApp();
+        //[TestMethod]
+        //public void ScrollToEndOfListUsingRemoteTouchScreenFlick()
+        //{
+        //    driver.LaunchApp();
 
-            var touchScreen = new RemoteTouchScreen(driver);
+        //    var touchScreen = new RemoteTouchScreen(driver);
+        //    var el1 = driver.FindElement(MobileBy.Name("bla"));
+        //    el1.FindElementsByIosUIAutomation
+        //    touchScreen.Flick(0, 160);
+        //    touchScreen.Flick(0, 160);
 
-            touchScreen.Flick(0, 160);
-            touchScreen.Flick(0, 160);
+        //    driver.CloseApp();
 
-            driver.CloseApp();
-
-        }
+        //}
 
         [TestMethod]
         public void ScrollToEndOfListUsingRemoteTouchScreenScroll()

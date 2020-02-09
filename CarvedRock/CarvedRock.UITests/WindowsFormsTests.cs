@@ -103,8 +103,8 @@ namespace CarvedRock.UITests
             // tap on second item
             var el1 = driver.FindElementByAccessibilityId("Add");
             TouchAction a = new TouchAction(driver);
-            a.Tap(el1);
             el1.Click();
+       
             var elItemText = driver.FindElementByAccessibilityId("ItemText");
             elItemText.Clear();
             elItemText.SendKeys("This is a new Item");

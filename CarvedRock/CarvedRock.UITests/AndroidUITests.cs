@@ -32,24 +32,25 @@ namespace CarvedRock.UITests
             //capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "5.0.1");
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "com.fluentbytes.carvedrock");
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, "crc641782d5af3c9cf50a.MainActivity");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.Avd, "demo_device");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AvdArgs, "-no-boot-anim -no-snapshot-load");
+ //           capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.Avd, "demo_device");
+//            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AvdArgs, "-no-boot-anim -no-snapshot-load");
             //capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AndroidCoverage, "false");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "demo_device");
+//            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
+//            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "demo_device");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "2471736c36037ece");
             capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, "UiAutomator2");
 
-            var currentPath = Directory.GetCurrentDirectory();
-            Console.WriteLine($"Current path: {currentPath}");
-            var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-x86.apk");
-            packagePath = Path.GetFullPath(packagePath);
-            Console.WriteLine($"Package path: {packagePath}");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, packagePath);
+            //var currentPath = Directory.GetCurrentDirectory();
+            //Console.WriteLine($"Current path: {currentPath}");
+            //var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-x86.apk");
+            //packagePath = Path.GetFullPath(packagePath);
+            //Console.WriteLine($"Package path: {packagePath}");
+            //capabilities.AddAdditionalCapability(MobileCapabilityType.App, packagePath);
 
-            Uri serverUri = new Uri("http://127.0.0.1:4723/wd/hub");
-            //var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            //_appiumLocalService.Start(); ;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities);
+            //Uri serverUri = new Uri("http://127.0.0.1:4723/wd/hub");
+            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+           _appiumLocalService.Start(); ;
+            driver = new AndroidDriver<AppiumWebElement>(_appiumLocalService, capabilities);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
         }
@@ -68,8 +69,8 @@ namespace CarvedRock.UITests
             driver.LaunchApp();
             // tap on second item
             var el1 = driver.FindElementByAccessibilityId("Second item");
-            TouchAction a = new TouchAction(driver);
-            a.Tap(el1);
+            //TouchAction a = new TouchAction(driver);
+            //a.Tap(el1);
 
             el1.Click();
             var el2 = driver.FindElementByAccessibilityId("ItemText");
@@ -83,6 +84,15 @@ namespace CarvedRock.UITests
 
             driver.CloseApp();
 
+        }
+
+        [TestMethod]
+        public void FindElementByName()
+        {
+            driver.LaunchApp();
+            // tap on second item
+            var el1 = driver.FindElementByName("Second item");
+            el1.Click();
         }
 
         [TestMethod]

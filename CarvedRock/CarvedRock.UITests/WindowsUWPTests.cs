@@ -33,9 +33,9 @@ namespace CarvedRock.UITests
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
             
             var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            _appiumLocalService.Start(); ;
-            driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
-            //driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);
+            _appiumLocalService.Start(); 
+            //driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
+            driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
         }
@@ -49,7 +49,7 @@ namespace CarvedRock.UITests
 
             touchScreen.Flick(0, 160);
             touchScreen.Flick(0, 160);
-
+            
             driver.CloseApp();
 
         }
@@ -76,22 +76,28 @@ namespace CarvedRock.UITests
 
         }
 
-        [TestMethod]
-        public void TapElementWeFind()
-        {
-            driver.LaunchApp();
+        //[TestMethod]
+        //public void TapElementWeFind()
+        //{
+        //    driver.LaunchApp();
             
-            var ListView = driver.FindElement(MobileBy.ClassName("ListView"));
-            ListView.Click();
+        //    var ListView = driver.FindElement(MobileBy.ClassName("ListView"));
+        //    var clickablePoint = ListView.GetAttribute("ClickablePoint");
+        //    driver.getPro
+        //    var attributesONElement = ListView.GetProperty("attributes");
 
-            driver.CloseApp();
-        }
+        //    ListView.Click();
+
+        ////    var stop = driver.StopRecordingScreen();
+
+        //    driver.CloseApp();
+        //}
         [TestMethod]
         public void ScrollToEndOfListUsingPointerInputDevice()
         {
             driver.LaunchApp();
             var ListView = driver.FindElement(MobileBy.ClassName("ListView"));
-            
+            ListView.GetAttribute
             // set start point
             FlickUp(driver, ListView);
 
