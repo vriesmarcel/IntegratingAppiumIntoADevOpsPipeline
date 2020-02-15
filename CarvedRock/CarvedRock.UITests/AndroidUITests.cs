@@ -6,6 +6,7 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.Service.Options;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
@@ -18,41 +19,13 @@ namespace CarvedRock.UITests
     [TestClass]
     public class AndroidUITests
     {
-        static private AndroidDriver<AppiumWebElement> driver;
+        static TestContext _ctx;
         static private AppiumLocalService _appiumLocalService;
 
         [ClassInitialize]
         static public void Initialize(TestContext context)
         {
-            System.Environment.SetEnvironmentVariable("ANDROID_HOME", @"C:\Program Files (x86)\Android\android-sdk");
-            System.Environment.SetEnvironmentVariable("JAVA_HOME", @"C:\Program Files\Android\jdk\microsoft_dist_openjdk_1.8.0.25\bin");
-
-
-            var capabilities = new AppiumOptions();
-            //capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "5.0.1");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "com.fluentbytes.carvedrock");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, "crc641782d5af3c9cf50a.MainActivity");
- //           capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.Avd, "demo_device");
-//            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AvdArgs, "-no-boot-anim -no-snapshot-load");
-            //capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AndroidCoverage, "false");
-//            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
-//            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "demo_device");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "2471736c36037ece");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, "UiAutomator2");
-
-            //var currentPath = Directory.GetCurrentDirectory();
-            //Console.WriteLine($"Current path: {currentPath}");
-            //var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-x86.apk");
-            //packagePath = Path.GetFullPath(packagePath);
-            //Console.WriteLine($"Package path: {packagePath}");
-            //capabilities.AddAdditionalCapability(MobileCapabilityType.App, packagePath);
-
-            //Uri serverUri = new Uri("http://127.0.0.1:4723/wd/hub");
-            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-           _appiumLocalService.Start(); ;
-            driver = new AndroidDriver<AppiumWebElement>(_appiumLocalService, capabilities);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
+            _ctx = context;
         }
         [ClassCleanup]
         static public void CleanUp()
@@ -61,86 +34,88 @@ namespace CarvedRock.UITests
             _appiumLocalService = null;
         }
 
+        [TestMethod]
+        public void TestListInstalledPackages()
+        {
+            AndroidDriver<AppiumWebElement> driver = StartApp();
+            //get a list of all installed packages on the device
+            string script = "mobile: shell";
+            var arguments = new Dictionary<string, string>
+            {
+                { "command", "pm list packages" },
+                { "----show-versioncode", "" }
+            };
+
+            var list = driver.ExecuteScript(script,arguments);
+            Assert.IsNotNull(list);
+            Console.Write(list);
+        }
 
 
         [TestMethod]
         public void CheckMasterDetailAndBack()
         {
-            driver.LaunchApp();
-            // tap on second item
-            var el1 = driver.FindElementByAccessibilityId("Second item");
-            //TouchAction a = new TouchAction(driver);
-            //a.Tap(el1);
+            AndroidDriver<AppiumWebElement> driver = StartApp();
 
+            // tap on second item
+            var el1 = driver.FindElement(MobileBy.AccessibilityId("Second item"));
             el1.Click();
-            var el2 = driver.FindElementByAccessibilityId("ItemText");
+
+            var el2 = driver.FindElement(MobileBy.AccessibilityId("ItemText"));
             Assert.IsTrue(el2.Text == "Second item");
 
             driver.PressKeyCode(AndroidKeyCode.Back);
 
-            var el3 = driver.FindElementByAccessibilityId("Fourth item");
+            var el3 = driver.FindElement(MobileBy.AccessibilityId("Fourth item"));
             Assert.IsTrue(el3 != null);
-
 
             driver.CloseApp();
 
         }
 
         [TestMethod]
-        public void FindElementByName()
-        {
-            driver.LaunchApp();
-            // tap on second item
-            var el1 = driver.FindElementByName("Second item");
-            el1.Click();
-        }
-
-        [TestMethod]
         public void AddNewItem()
         {
-            driver.LaunchApp();
+            AndroidDriver<AppiumWebElement> driver = StartApp();
+
             // tap on second item
-            var el1 = driver.FindElementByAccessibilityId("Add");
-            TouchAction a = new TouchAction(driver);
-            a.Tap(el1);
+            var el1 = driver.FindElement(MobileBy.AccessibilityId("Add"));
             el1.Click();
-            var elItemText = driver.FindElementByAccessibilityId("ItemText");
+
+            var elItemText = driver.FindElement(MobileBy.AccessibilityId("ItemText"));
             elItemText.Clear();
             elItemText.SendKeys("This is a new Item");
 
-            var elItemDetail = driver.FindElementByAccessibilityId("ItemDescription");
+            var elItemDetail = driver.FindElement(MobileBy.AccessibilityId("ItemDescription"));
             elItemDetail.Clear();
             elItemDetail.SendKeys("These are the details");
 
-            var elSave = driver.FindElementByAccessibilityId("Save");
+            var elSave = driver.FindElement(MobileBy.AccessibilityId("Save"));
             elSave.Click();
+            CreateScreenshot(driver);
+
             WaitForProgressbarToDisapear(driver);
 
-            var scrollableElement = driver.FindElementByClassName("android.widget.ListView");
-            //new TouchAction(driver).Press(200,200).Wait(2).MoveTo(200,0).Release();
+            CreateScreenshot(driver);
 
-
+            var scrollableElement = driver.FindElement(MobileBy.AccessibilityId("ItemsListView"));
 
             Func<AppiumWebElement> FindElementAction = () =>
             {
                 // find all text views
                 // check if the text matches
                 var elements = driver.FindElementsByClassName("android.widget.TextView");
-               foreach(var textView in elements)
+                foreach (var textView in elements)
                 {
                     if (textView.Text == "This is a new Item")
                         return textView;
                 }
-
                 return null;
             };
 
             var elementFound = ScrollUntillItemFound(driver, scrollableElement, FindElementAction, 4);
 
-
             Assert.IsTrue(elementFound != null);
-
-
             driver.CloseApp();
 
         }
@@ -155,7 +130,7 @@ namespace CarvedRock.UITests
             };
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
 
-            wait.Until(d => d.FindElementByAccessibilityId("Second item"));
+            wait.Until(d => d.FindElement(MobileBy.AccessibilityId("Second item")));
         }
 
         private AppiumWebElement ScrollUntillItemFound(AndroidDriver<AppiumWebElement> driver, AppiumWebElement relativeTo, Func<AppiumWebElement> FindElementAction, int reties)
@@ -171,7 +146,6 @@ namespace CarvedRock.UITests
             elementfound = wait.Until(d =>
                          {
                              Flick(driver, relativeTo, UpOrDown.Up);
-
                              return FindElementAction();
                          });
 
@@ -200,6 +174,48 @@ namespace CarvedRock.UITests
         {
             Up = 0,
             Down
+        }
+
+
+        public void CreateScreenshot(AndroidDriver<AppiumWebElement>  driver)
+        {
+            var screenshot = driver.GetScreenshot();
+            var fileName = Guid.NewGuid().ToString() + ".png";
+            screenshot.SaveAsFile(fileName);
+            _ctx.AddResultFile(fileName);
+        }
+
+        private AndroidDriver<AppiumWebElement> StartApp()
+        {
+            System.Environment.SetEnvironmentVariable("ANDROID_HOME", @"C:\Program Files (x86)\Android\android-sdk");
+            System.Environment.SetEnvironmentVariable("JAVA_HOME", @"C:\Program Files\Android\jdk\microsoft_dist_openjdk_1.8.0.25\bin");
+
+            var capabilities = new AppiumOptions();
+            // connecting to a device or emulator
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "2471736c36037ece");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, "UiAutomator2");
+            // specifyig which app we want to install and launch
+            var currentPath = Directory.GetCurrentDirectory();
+            Console.WriteLine($"Current path: {currentPath}");
+            var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-arm64-v8a.apk");
+            packagePath = Path.GetFullPath(packagePath);
+            Console.WriteLine($"Package path: {packagePath}");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, packagePath);
+
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "com.fluentbytes.carvedrock");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, "crc641782d5af3c9cf50a.MainActivity");
+
+            // specify startup flags appium server to execute adb shell commands
+            var serveroptions = new OptionCollector();
+            var relaxedSecurityOption = new KeyValuePair<string, string>("--relaxed-security", "");
+
+            serveroptions.AddArguments( relaxedSecurityOption);
+            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().WithArguments(serveroptions).Build();
+            _appiumLocalService.Start(); ;
+            var driver = new AndroidDriver<AppiumWebElement>(_appiumLocalService, capabilities);
+
+            return driver;
+
         }
     }
 }

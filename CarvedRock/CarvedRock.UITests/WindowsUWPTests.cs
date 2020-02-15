@@ -97,7 +97,7 @@ namespace CarvedRock.UITests
         {
             driver.LaunchApp();
             var ListView = driver.FindElement(MobileBy.ClassName("ListView"));
-            ListView.GetAttribute
+           // ListView.GetAttribute
             // set start point
             FlickUp(driver, ListView);
 
