@@ -14,10 +14,10 @@
     
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
-            <Grid x:Name="progressGrid" Grid.Row="0" Grid.Column="0" Padding="10,0,10,0" IsVisible="False">
-                <ProgressBar x:Name="progressBar" BackgroundColor="Transparent"  Progress="0.00"  HorizontalOptions="FillAndExpand" HeightRequest="20"/>
+            <StackLayout x:Name="progressGrid"  Padding="10,0,10,0" IsVisible="False">
+                <ProgressBar x:Name="progressBar" BackgroundColor="Red"  Progress="0.00"  HorizontalOptions="FillAndExpand" HeightRequest="20"/>
                 <Label x:Name="progressName" Text="Saving..." Margin="80,0,0,0"></Label>
-            </Grid>           
+            </StackLayout>           
             <Label Text="Text" FontSize="Medium" />
             <Entry Text="{Binding Item.Text}" AutomationId="ItemText" d:Text="Item name" FontSize="Small" />
             <Label Text="Description" FontSize="Medium" />

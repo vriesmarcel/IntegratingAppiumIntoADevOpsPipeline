@@ -43,7 +43,7 @@ namespace CarvedRock.UITests
             var arguments = new Dictionary<string, string>
             {
                 { "command", "pm list packages" },
-                { "----show-versioncode", "" }
+                { "--show-versioncode", "" }
             };
 
             var list = driver.ExecuteScript(script,arguments);
@@ -191,13 +191,19 @@ namespace CarvedRock.UITests
             System.Environment.SetEnvironmentVariable("JAVA_HOME", @"C:\Program Files\Android\jdk\microsoft_dist_openjdk_1.8.0.25\bin");
 
             var capabilities = new AppiumOptions();
+            // automatic start of the emulator if not running
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.Avd, "demo_device");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AvdArgs, "-no-boot-anim -no-snapshot-load");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
+            
+
             // connecting to a device or emulator
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "2471736c36037ece");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "emulator-5554");
             capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, "UiAutomator2");
             // specifyig which app we want to install and launch
             var currentPath = Directory.GetCurrentDirectory();
             Console.WriteLine($"Current path: {currentPath}");
-            var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-arm64-v8a.apk");
+            var packagePath = Path.Combine(currentPath, @"..\..\..\AppsToTest\com.fluentbytes.carvedrock-x86.apk");
             packagePath = Path.GetFullPath(packagePath);
             Console.WriteLine($"Package path: {packagePath}");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, packagePath);

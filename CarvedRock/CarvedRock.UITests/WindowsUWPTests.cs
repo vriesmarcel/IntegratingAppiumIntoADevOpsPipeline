@@ -190,7 +190,6 @@ namespace CarvedRock.UITests
                 PollingInterval = TimeSpan.FromMilliseconds(500)
             };
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-
             wait.Until(d => d.FindElementByAccessibilityId("Second item"));
         }
 

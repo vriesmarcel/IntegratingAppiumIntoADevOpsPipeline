@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CarvedRock.Wpf2.Properties
+namespace CarvedRock.Wpf.Properties
 {
 
 

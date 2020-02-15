@@ -1,13 +1,37 @@
-﻿<wpf:FormsApplicationPage x:Class="CarvedRock.Wpf2.MainWindow"
+﻿<Window x:Class="CarvedRock.Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:wpf="clr-namespace:Xamarin.Forms.Platform.WPF;assembly=Xamarin.Forms.Platform.WPF"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CarvedRock.Wpf2"
+        xmlns:local="clr-namespace:CarvedRock.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="0,60,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar>
+                    <Button ToolTip="Add new item to the list" Click="OnAddClicked">
+                        <StackPanel Background="Blue" Orientation="Vertical">
+                            <Image Source="Add.png" Height="25" />
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </DockPanel>
+        <ListView Grid.Row="1" x:Name="listview" ItemsSource="{Binding Items}" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock FontSize="20"  FontWeight="Bold" Text="{Binding Text}"></TextBlock>
+                        <TextBlock FontSize="12"  Text="{Binding Description}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </Grid>
-</wpf:FormsApplicationPage>
+</Window>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace CarvedRock.Wpf2
+namespace CarvedRock.Wpf
 {
     /// <summary>
     /// Interaction logic for App.xaml
