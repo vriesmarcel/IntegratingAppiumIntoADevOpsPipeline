@@ -2,22 +2,12 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
-using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Appium.Windows;
-using OpenQA.Selenium.Appium.Windows.Enums;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Interactions.Internal;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 
 
 namespace CarvedRock.UITests
@@ -39,10 +29,10 @@ namespace CarvedRock.UITests
             var driver = StartApp();
             // tap on second item
             var listview = driver.FindElementByAccessibilityId("listview");
-           // HighlightElement(listview, 3000);
+
 
             var row = listview.FindElementByName("Second item");
-            //HighlightElement(row, 3000);
+
             row.Click();
 
             var itemText = driver.FindElementByAccessibilityId("txtItemText");
@@ -56,26 +46,6 @@ namespace CarvedRock.UITests
 
             driver.CloseApp();
 
-        }
-
-        [DllImport("User32.dll")]
-        public static extern IntPtr GetDC(IntPtr hwnd);
-        [DllImport("User32.dll")]
-        public static extern void ReleaseDC(IntPtr hwnd, IntPtr dc);
-
-        private void HighlightElement(AppiumWebElement element, int milliseconds)
-        {
-        
-            //var ptr = new IntPtr(Convert.ToInt32(element.WrappedDriver.CurrentWindowHandle, 16));
-            // Draw rectangle to screen.
-            IntPtr desktopPtr = GetDC(IntPtr.Zero);
-            Graphics newGraphics = Graphics.FromHdc(desktopPtr);
-
-            newGraphics.DrawRectangle(new Pen(Color.Red, 3), element.Coordinates.LocationInViewport.X, element.Coordinates.LocationInViewport.Y, element.Rect.Width, element.Rect.Height);
-            Thread.Sleep(milliseconds);
-            // Dispose of new graphics.
-            newGraphics.Dispose();
-            ReleaseDC(IntPtr.Zero, desktopPtr);
         }
 
         [TestMethod]
@@ -112,6 +82,8 @@ namespace CarvedRock.UITests
                 FlickUp(driver, listview);
                 return d.FindElementByName("This is a new Item");
             });
+
+            Assert.IsTrue(elementfound!=null);
 
             driver.CloseApp();
 

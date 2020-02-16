@@ -39,10 +39,8 @@ namespace CarvedRock.UITests
             var driver = StartApp();
             // tap on second item
             var listview = driver.FindElementByAccessibilityId("listView1");
-           // HighlightElement(listview, 3000);
 
             var row = listview.FindElementByName("Second item");
-           // HighlightElement(row, 3000);
 
             var column1 = row.FindElementByName("Second item");
 
@@ -72,11 +70,23 @@ namespace CarvedRock.UITests
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
 
             var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            _appiumLocalService.Start(); ;
+            _appiumLocalService.Start(); 
             var driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
             return driver ;
         }
 
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         [DllImport("User32.dll")]
         public static extern IntPtr GetDC(IntPtr hwnd);
         [DllImport("User32.dll")]
