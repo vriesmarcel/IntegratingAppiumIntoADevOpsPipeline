@@ -14,7 +14,7 @@
         <DockPanel Grid.Row="0">
             <ToolBarTray DockPanel.Dock="Top">
                 <ToolBar>
-                    <Button ToolTip="Add new item to the list" Click="OnAddClicked">
+                    <Button x:Name="btnAdd" ToolTip="Add new item to the list" Click="OnAddClicked">
                         <StackPanel Background="Blue" Orientation="Vertical">
                             <Image Source="Add.png" Height="25" />
                         </StackPanel>

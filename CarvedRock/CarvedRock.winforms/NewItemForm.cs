@@ -22,7 +22,7 @@ namespace CarvedRock
         private void button1_Click(object sender, EventArgs e)
         {
             var dataStore = new MockDataStore();
-            var newItem = new Item() { Text = txtItemText.Text, Description = txtItemText.Text };
+            var newItem = new Item() { Text = txtItemText.Text, Description = txtItemDetail.Text };
 
             dataStore.AddItemAsync(newItem).Wait();
             Close();

@@ -38,6 +38,8 @@ namespace CarvedRock.Wpf
         private void OnAddClicked(object sender, RoutedEventArgs e)
         {
             var AddWindow = new AddNewItem();
+            AddWindow.ShowInTaskbar = false;
+            AddWindow.Owner = Application.Current.MainWindow;
             AddWindow.ShowDialog();
             MockDataStore store = new MockDataStore(); 
             Items = store.GetItemsAsync().Result;
@@ -56,6 +58,8 @@ namespace CarvedRock.Wpf
         {
             var detailsWindow = new ItemDetail();
             detailsWindow.Item = listview.SelectedItem as Item;
+            detailsWindow.ShowInTaskbar = false;
+            detailsWindow.Owner = Application.Current.MainWindow;
             detailsWindow.ShowDialog();
         }
     }

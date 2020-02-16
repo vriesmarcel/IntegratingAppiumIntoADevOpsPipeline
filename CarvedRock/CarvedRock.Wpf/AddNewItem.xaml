@@ -11,7 +11,7 @@
         <Label Content="Item Detail" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Margin="62,163,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtDetailText"  HorizontalAlignment="Left" Margin="68,194,0,0" TextWrapping="Wrap" Text="{Binding Text}" VerticalAlignment="Top" Height="30" Width="250"/>
         <TextBox x:Name="txtItemText" HorizontalAlignment="Left" Margin="68,95,0,0" TextWrapping="Wrap" Text="{Binding Description}" VerticalAlignment="Top" Height="30" Width="250"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="68,248,0,0" VerticalAlignment="Top" Width="88" Height="33" Click="Button_Click"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="68,248,0,0" VerticalAlignment="Top" Width="88" Height="33" Click="Button_Click"/>
 
     </Grid>
 </Window>

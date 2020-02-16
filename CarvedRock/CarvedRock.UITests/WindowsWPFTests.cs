@@ -23,7 +23,7 @@ using System.Threading;
 namespace CarvedRock.UITests
 {
     [TestClass]
-    public class WindowsForsTests
+    public class WindowsWPFTests
     {
         static TestContext ctx;
         [ClassInitialize]
@@ -38,23 +38,17 @@ namespace CarvedRock.UITests
         {
             var driver = StartApp();
             // tap on second item
-            var listview = driver.FindElementByAccessibilityId("listView1");
+            var listview = driver.FindElementByAccessibilityId("listview");
            // HighlightElement(listview, 3000);
 
             var row = listview.FindElementByName("Second item");
-           // HighlightElement(row, 3000);
+            //HighlightElement(row, 3000);
+            row.Click();
 
-            var column1 = row.FindElementByName("Second item");
+            var itemText = driver.FindElementByAccessibilityId("txtItemText");
+            Assert.IsTrue(itemText.Text == "Second item");
 
-            column1.Click();
-       
-
-            //find dialog
-            var dialog = driver.FindElementByAccessibilityId("Details");
-            var el2 = dialog.FindElementByAccessibilityId("lblItemText");
-            Assert.IsTrue(el2.Text == "Second item");
-
-            var backButton = dialog.FindElementByAccessibilityId("button1");
+            var backButton = driver.FindElementByAccessibilityId("ok");
             backButton.Click();
 
             var el3 = listview.FindElementByName("Fourth item");
@@ -62,19 +56,6 @@ namespace CarvedRock.UITests
 
             driver.CloseApp();
 
-        }
-
-        private WindowsDriver<WindowsElement> StartApp()
-        {
-            var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, @"C:\temp\App3\CarvedRock\CarvedRock.winforms\bin\Debug\CarvedRock.exe");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
-
-            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            _appiumLocalService.Start(); ;
-            var driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
-            return driver ;
         }
 
         [DllImport("User32.dll")]
@@ -102,24 +83,22 @@ namespace CarvedRock.UITests
         {
             var driver = StartApp();
             // tap on second item
-            var addButton = driver.FindElementByName("AddNewItem");
-            addButton.Click();
-            
-            var AddDialogWindow = driver.FindElementByAccessibilityId("NewItemForm");
+            var el1 = driver.FindElementByAccessibilityId("btnAdd");
+            el1.Click();
+       
+            var elItemText = driver.FindElementByAccessibilityId("txtItemText");
+            elItemText.Clear();
+            elItemText.SendKeys("This is a new Item");
 
-            var inputFieldItem = AddDialogWindow.FindElementByName("ItemText");
-            inputFieldItem.Clear();
-            inputFieldItem.SendKeys("New Item Text");
+            var elItemDetail = driver.FindElementByAccessibilityId("txtDetailText");
+            elItemDetail.Clear();
+            elItemDetail.SendKeys("These are the details");
 
-            var InputFieldItemDetail = AddDialogWindow.FindElementByName("ItemDetail");
-            InputFieldItemDetail.Clear();
-            InputFieldItemDetail.SendKeys("New item details text");
+            var elSave = driver.FindElementByAccessibilityId("btnAdd");
+            elSave.Click();
 
-            //close the dialog
-            var AddButton = AddDialogWindow.FindElementByAccessibilityId("button1");
-            AddButton.Click();
 
-            var listview = driver.FindElementByAccessibilityId("listView1");
+            var listview = driver.FindElementByAccessibilityId("listview");
 
             var wait = new DefaultWait<WindowsDriver<WindowsElement>>(driver)
             {
@@ -127,25 +106,16 @@ namespace CarvedRock.UITests
                 PollingInterval = TimeSpan.FromMilliseconds(1000)
             };
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-
+ 
             var elementfound = wait.Until(d =>
             {
                 FlickUp(driver, listview);
-                return d.FindElementByName("New Item Text");
+                return d.FindElementByName("This is a new Item");
             });
 
             driver.CloseApp();
 
         }
-         
-        private void CreateScreenshot(WindowsDriver<WindowsElement> driver)
-        {
-            var screenshot = driver.GetScreenshot();
-            var fileName = Guid.NewGuid().ToString() + ".png";
-            screenshot.SaveAsFile(fileName, OpenQA.Selenium.ScreenshotImageFormat.Png);
-            ctx.AddResultFile(fileName);
-        }
-
         private void FlickUp(WindowsDriver<WindowsElement> driver, AppiumWebElement element)
         {
             var input = new PointerInputDevice(PointerKind.Touch);
@@ -155,6 +125,19 @@ namespace CarvedRock.UITests
             FlickUp.AddAction(input.CreatePointerMove(element, 0, -300, TimeSpan.FromMilliseconds(200)));
             FlickUp.AddAction(input.CreatePointerUp(MouseButton.Left));
             driver.PerformActions(new List<ActionSequence>() { FlickUp });
+        }
+
+        public WindowsDriver<WindowsElement> StartApp()
+        {
+            var capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, @"C:\temp\App3\CarvedRock\CarvedRock.Wpf\bin\Debug\CarvedRock.wpf.exe");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
+
+            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            _appiumLocalService.Start(); ;
+            var driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
+            return driver;
         }
     }
 }
