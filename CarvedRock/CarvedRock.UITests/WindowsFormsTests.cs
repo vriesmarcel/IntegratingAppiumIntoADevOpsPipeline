@@ -23,7 +23,7 @@ using System.Threading;
 namespace CarvedRock.UITests
 {
     [TestClass]
-    public class WindowsForsTests
+    public class WindowsFormsTests
     {
         static TestContext ctx;
         [ClassInitialize]
@@ -65,7 +65,8 @@ namespace CarvedRock.UITests
         private WindowsDriver<WindowsElement> StartApp()
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, @"C:\temp\App3\CarvedRock\CarvedRock.winforms\bin\Debug\CarvedRock.exe");
+            // change this location based on where you cloned the git repo
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, @"C:\temp\Getting-Started-with-UI-Testing-and-Appium\CarvedRock\CarvedRock.winforms\bin\Debug\CarvedRock.exe");
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
 
@@ -76,36 +77,6 @@ namespace CarvedRock.UITests
         }
 
        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        [DllImport("User32.dll")]
-        public static extern IntPtr GetDC(IntPtr hwnd);
-        [DllImport("User32.dll")]
-        public static extern void ReleaseDC(IntPtr hwnd, IntPtr dc);
-
-        private void HighlightElement(AppiumWebElement element, int milliseconds)
-        {
-        
-            //var ptr = new IntPtr(Convert.ToInt32(element.WrappedDriver.CurrentWindowHandle, 16));
-            // Draw rectangle to screen.
-            IntPtr desktopPtr = GetDC(IntPtr.Zero);
-            Graphics newGraphics = Graphics.FromHdc(desktopPtr);
-
-            newGraphics.DrawRectangle(new Pen(Color.Red, 3), element.Coordinates.LocationInViewport.X, element.Coordinates.LocationInViewport.Y, element.Rect.Width, element.Rect.Height);
-            Thread.Sleep(milliseconds);
-            // Dispose of new graphics.
-            newGraphics.Dispose();
-            ReleaseDC(IntPtr.Zero, desktopPtr);
-        }
 
         [TestMethod]
         public void AddNewItem()
@@ -147,15 +118,7 @@ namespace CarvedRock.UITests
             driver.CloseApp();
 
         }
-         
-        private void CreateScreenshot(WindowsDriver<WindowsElement> driver)
-        {
-            var screenshot = driver.GetScreenshot();
-            var fileName = Guid.NewGuid().ToString() + ".png";
-            screenshot.SaveAsFile(fileName, OpenQA.Selenium.ScreenshotImageFormat.Png);
-            ctx.AddResultFile(fileName);
-        }
-
+ 
         private void FlickUp(WindowsDriver<WindowsElement> driver, AppiumWebElement element)
         {
             var input = new PointerInputDevice(PointerKind.Touch);

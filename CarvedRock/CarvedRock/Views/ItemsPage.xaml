@@ -38,6 +38,8 @@
 
                         <StackLayout Padding="10" AutomationProperties.Name="{Binding Text}" StyleId="StackLayout" >
                             <Label Text="{Binding Text}"   
+                                AutomationId="{Binding Text}"
+                                AutomationProperties.Name="{Binding Text}"
                                 d:Text="{Binding .}"
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 

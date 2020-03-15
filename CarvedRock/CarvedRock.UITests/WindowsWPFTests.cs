@@ -102,7 +102,8 @@ namespace CarvedRock.UITests
         public WindowsDriver<WindowsElement> StartApp()
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, @"C:\temp\App3\CarvedRock\CarvedRock.Wpf\bin\Debug\CarvedRock.wpf.exe");
+            // change this location based on where you cloned the git repo
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, @"C:\temp\Getting-Started-with-UI-Testing-and-Appium\CarvedRock\CarvedRock.Wpf\bin\Debug\CarvedRock.wpf.exe");
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
 

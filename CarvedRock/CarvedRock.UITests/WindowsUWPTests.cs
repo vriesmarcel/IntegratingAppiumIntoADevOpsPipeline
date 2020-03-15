@@ -21,105 +21,26 @@ namespace CarvedRock.UITests
     [TestClass]
     public class WindowsUWPTests
     {
-        static TestContext ctx;
-        private static  WindowsDriver<WindowsElement> driver;
-        [ClassInitialize]
-        static public void Initialize(TestContext context)
+  
+        private WindowsDriver<WindowsElement> StartApp()
         {
-            ctx = context;
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App , "8b831c56-bc54-4a8b-af94-a448f80118e7_sezxftbtgh66j!App");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, "8b831c56-bc54-4a8b-af94-a448f80118e7_sezxftbtgh66j!App");
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
-            
+
             var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            _appiumLocalService.Start(); 
-            //driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
-            driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);
-            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
+            _appiumLocalService.Start();
+            var driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
+            return driver;
         }
-
-        [TestMethod]
-        public void ScrollToEndOfListUsingRemoteTouchScreenFlick()
-        {
-            driver.LaunchApp();
-
-            var touchScreen = new RemoteTouchScreen(driver);
-
-            touchScreen.Flick(0, 160);
-            touchScreen.Flick(0, 160);
-            
-            driver.CloseApp();
-
-        }
-
-        [TestMethod]
-        public void ScrollToEndOfListUsingRemoteTouchScreenScroll()
-        {
-            driver.LaunchApp();
-
-            var touchScreen = new RemoteTouchScreen(driver);
-            touchScreen.Scroll(0, -300);
-            touchScreen.Scroll(0, -300);
-
-            driver.CloseApp();
-
-        }
-
-        [TestMethod]
-        public void GetUIDocument()
-        {
-            driver.LaunchApp();
-            var document = driver.PageSource;
-            ctx.WriteLine(document);
-
-        }
-
-        //[TestMethod]
-        //public void TapElementWeFind()
-        //{
-        //    driver.LaunchApp();
-            
-        //    var ListView = driver.FindElement(MobileBy.ClassName("ListView"));
-        //    var clickablePoint = ListView.GetAttribute("ClickablePoint");
-        //    driver.getPro
-        //    var attributesONElement = ListView.GetProperty("attributes");
-
-        //    ListView.Click();
-
-        ////    var stop = driver.StopRecordingScreen();
-
-        //    driver.CloseApp();
-        //}
-        [TestMethod]
-        public void ScrollToEndOfListUsingPointerInputDevice()
-        {
-            driver.LaunchApp();
-            var ListView = driver.FindElement(MobileBy.ClassName("ListView"));
-           // ListView.GetAttribute
-            // set start point
-            FlickUp(driver, ListView);
-
-            Thread.Sleep(3000);
-
-            FlickUp(driver, ListView);
-
- 
-            Thread.Sleep(3000);
-
-            driver.CloseApp();
-
-        }
-
-       
 
         [TestMethod]
         public void CheckMasterDetailAndBack()
         {
-            driver.LaunchApp();
+            var driver = StartApp();
             // tap on second item
-            var el1 = driver.FindElementByAccessibilityId("Second item");
+            var el1 = driver.FindElementByName("Second item");
             TouchAction a = new TouchAction(driver);
             a.Tap(el1);
 
@@ -130,7 +51,7 @@ namespace CarvedRock.UITests
             var backButton = driver.FindElementByAccessibilityId("Back");
             backButton.Click();
 
-            var el3 = driver.FindElementByAccessibilityId("Fourth item");
+            var el3 = driver.FindElementByName("Fourth item");
             Assert.IsTrue(el3 != null);
 
             driver.CloseApp();
@@ -140,7 +61,7 @@ namespace CarvedRock.UITests
         [TestMethod]
         public void AddNewItem()
         {
-            driver.LaunchApp();
+            var driver = StartApp();
             // tap on second item
             var el1 = driver.FindElementByAccessibilityId("Add");
             TouchAction a = new TouchAction(driver);
@@ -169,7 +90,7 @@ namespace CarvedRock.UITests
                 touchScreen.Flick(0, 180);
                 try
                 {
-                    var el3 = driver.FindElementByAccessibilityId("This is a new Item");
+                    var el3 = driver.FindElementByName("This is a new Item");
                     found = el3 != null;
                 }
                 catch(Exception)
@@ -190,14 +111,7 @@ namespace CarvedRock.UITests
                 PollingInterval = TimeSpan.FromMilliseconds(500)
             };
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-            wait.Until(d => d.FindElementByAccessibilityId("Second item"));
-        }
-
-        private void CreateScreenshot()
-        {
-            var screenshot = driver.GetScreenshot();
-            screenshot.SaveAsFile("startScreen.png", OpenQA.Selenium.ScreenshotImageFormat.Png);
-            ctx.AddResultFile("startScreen.png");
+            wait.Until(d => d.FindElementByName("Second item"));
         }
 
         private void FlickUp(WindowsDriver<WindowsElement> driver, AppiumWebElement element)
