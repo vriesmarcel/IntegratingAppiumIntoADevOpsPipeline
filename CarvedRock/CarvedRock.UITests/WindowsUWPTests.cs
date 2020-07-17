@@ -21,19 +21,14 @@ namespace CarvedRock.UITests
     [TestClass]
     public class WindowsUWPTests
     {
-  
-        private WindowsDriver<WindowsElement> StartApp()
+        static TestContext _ctx;
+     
+        [ClassInitialize]
+        static public void Initialize(TestContext context)
         {
-            var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, "8b831c56-bc54-4a8b-af94-a448f80118e7_sezxftbtgh66j!App");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
-
-            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            _appiumLocalService.Start();
-            var driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
-            return driver;
+            _ctx = context;
         }
+
 
         [TestMethod]
         public void CheckMasterDetailAndBack()
@@ -41,19 +36,21 @@ namespace CarvedRock.UITests
             var driver = StartApp();
             // tap on second item
             var el1 = driver.FindElementByName("Second item");
-            TouchAction a = new TouchAction(driver);
-            a.Tap(el1);
-
+            
+            CreateScreenshot(driver, _ctx);
             el1.Click();
             var el2 = driver.FindElementByAccessibilityId("ItemText");
             Assert.IsTrue(el2.Text == "Second item");
-
+            
+            CreateScreenshot(driver, _ctx);
             var backButton = driver.FindElementByAccessibilityId("Back");
             backButton.Click();
-
+            
+            CreateScreenshot(driver, _ctx);
             var el3 = driver.FindElementByName("Fourth item");
             Assert.IsTrue(el3 != null);
 
+            CreateScreenshot(driver, _ctx);
             driver.CloseApp();
 
         }
@@ -123,6 +120,26 @@ namespace CarvedRock.UITests
             FlickUp.AddAction(input.CreatePointerMove(element, 0, -600, TimeSpan.FromMilliseconds(200)));
             FlickUp.AddAction(input.CreatePointerUp(MouseButton.Left));
             driver.PerformActions(new List<ActionSequence>() { FlickUp });
+        }
+        private WindowsDriver<WindowsElement> StartApp()
+        {
+            var capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, "8b831c56-bc54-4a8b-af94-a448f80118e7_sezxftbtgh66j!App");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
+
+            var _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            _appiumLocalService.Start();
+            var driver = new WindowsDriver<WindowsElement>(_appiumLocalService, capabilities);
+            return driver;
+        }
+
+        public void CreateScreenshot(WindowsDriver<WindowsElement> driver, TestContext ctx)
+        {
+            var screenshot = driver.GetScreenshot();
+            var fileName = Guid.NewGuid().ToString() + ".png";
+            screenshot.SaveAsFile(fileName);
+            ctx.AddResultFile(fileName);
         }
     }
 }
