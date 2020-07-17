@@ -24,6 +24,7 @@ jobs:
       Wap_Project_Path: 'CarvedRock\CarvedRock.UWP\CarvedRock.UWP.csproj'               # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
       buildPlatform: 'x86|x64|ARM'
       appxPackageDir: 'CarvedRock\AppxPackages\\'
+      signingcertificate: Package_TemporaryKey.pfx
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -41,9 +42,16 @@ jobs:
 
     - name: Restore NuGet Packages
       run: nuget restore ${{env.Solution_Name}}
- 
+      
+    - name: download pfx for signing
+      run: |
+            $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+            $currentDirectory = Get-Location
+            $certificatePath = Join-Path -Path $currentDirectory -ChildPath $env:Wap_Project_Directory -AdditionalChildPath $env:signingcertificate
+            [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+            
     - name: Build UWP App
-      run: msbuild ${{env.Solution_Name}} /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload 
+      run: msbuild ${{env.Solution_Name}} /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile={{env.signingcertificate}} /p:PackageCertificatePassword={{secrets.PFX_PWD}}
  
     - name: Install UWP App
       run: powershell CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}\CarvedRock.UWP_1.0.0.0_Debug_Test\Install.ps1 -Force
