@@ -73,11 +73,10 @@ jobs:
         name: published App Package
         path: CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}
 
-    - name: Upload screenshots
+    - name: Upload Test Results
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: published screenshots UI test
-        path: TestResults\**\*.png
-        
+        name: published Test Results UI test
+        path: TestResults        
         
   
