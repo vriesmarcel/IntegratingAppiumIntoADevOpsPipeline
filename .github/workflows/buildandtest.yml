@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: published screenshots UI test
-        path: TestResults\*.png
+        path: TestResults\**\*.png
         
     - name: Setup MSBuild Path
       uses: warrenbuckley/Setup-MSBuild@v1
