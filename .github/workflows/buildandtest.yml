@@ -47,7 +47,7 @@ jobs:
       run: |
             $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
             $currentDirectory = Get-Location
-            $certificatePath = Join-Path -Path $currentDirectory -ChildPath $env:Wap_Project_Directory -AdditionalChildPath $env:signingcertificate
+            $certificatePath = [System.IO.Path]::Combine($currentDirectory, {{$env:Wap_Project_Directory}}, ${{env:signingcertificate}})
             [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
             
     - name: Build UWP App
