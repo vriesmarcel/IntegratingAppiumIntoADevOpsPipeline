@@ -20,11 +20,11 @@ jobs:
     env:
       Solution_Name: 'CarvedRock\CarvedRock.sln'                                        # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: 'CarvedRock.UITests\CarvedRock.UITests.csproj'                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-      Wap_Project_Directory: 'CarvedRock'                                               # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
+      Wap_Project_Directory: 'CarvedRock\CarvedRock.UWP'                                # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
       Wap_Project_Path: 'CarvedRock\CarvedRock.UWP\CarvedRock.UWP.csproj'               # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
       buildPlatform: 'x86|x64|ARM'
       appxPackageDir: 'CarvedRock\AppxPackages\\'
-      signingcertificate: Package_TemporaryKey.pfx
+      signingcertificate: CarvedRock.UWP_TemporaryKey.pfx
     steps:
     - name: Checkout
       uses: actions/checkout@v2
