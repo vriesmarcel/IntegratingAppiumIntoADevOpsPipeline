@@ -49,9 +49,11 @@ jobs:
             $currentDirectory = Get-Location
             $certificatePath = [System.IO.Path]::Combine($currentDirectory, $env:Wap_Project_Directory, $env:signingcertificate)
             [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+            Write-Host $certificatePath
+            Write-Host ${{github.workspace}}\${{env.Wap_Project_Directory}}\${{env.signingcertificate}}
             
     - name: Build UWP App
-      run: msbuild ${{env.Solution_Name}} /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=${{env.Wap_Project_Directory}}\${{env.signingcertificate}} /p:PackageCertificatePassword=${{secrets.PFX_PWD}}  /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint=""
+      run: msbuild ${{env.Solution_Name}} /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=${{github.workspace}}\${{env.Wap_Project_Directory}}\${{env.signingcertificate}} /p:PackageCertificatePassword=${{secrets.PFX_PWD}}  /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint=""
  
     - name: Install UWP App
       run: powershell CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}\CarvedRock.UWP_1.0.0.0_Debug_Test\Install.ps1 -Force
