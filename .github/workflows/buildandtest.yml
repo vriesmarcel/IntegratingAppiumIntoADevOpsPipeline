@@ -51,7 +51,7 @@ jobs:
             [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
             
     - name: Build UWP App
-      run: msbuild ${{env.Solution_Name}} /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=${{env.signingcertificate}} /p:PackageCertificatePassword=${{secrets.PFX_PWD}}
+      run: msbuild ${{env.Solution_Name}} /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=${{env.Wap_Project_Directory}}\${{env.signingcertificate}} /p:PackageCertificatePassword=${{secrets.PFX_PWD}}
  
     - name: Install UWP App
       run: powershell CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}\CarvedRock.UWP_1.0.0.0_Debug_Test\Install.ps1 -Force
