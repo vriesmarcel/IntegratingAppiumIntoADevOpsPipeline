@@ -124,7 +124,7 @@ namespace CarvedRock.UITests
         private WindowsDriver<WindowsElement> StartApp()
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, "8b831c56-bc54-4a8b-af94-a448f80118e7_sezxftbtgh66j!App");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, "8b831c56-bc54-4a8b-af94-a448f80118e7_9etdvjwkeybm6!App");
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Windows");
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "WindowsPC");
 
