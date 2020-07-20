@@ -55,6 +55,12 @@ jobs:
     - name: Build UWP App
       run: msbuild ${{env.Solution_Name}} /p:Configuration=Release /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=${{github.workspace}}\${{env.Wap_Project_Directory}}\${{env.signingcertificate}} /p:PackageCertificatePassword=${{secrets.PFX_PWD}}  /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint=""
  
+    - name: remove previous installs of app if exists
+      run: |
+            $package =Get-AppxPackageManifest -Package "8b831c56-bc54-4a8b-af94-a448f80118e7_1.0.0.0_x64__9etdvjwkeybm6"
+            if($package -ne $null) 
+            {Remove-AppxPackage -Package "8b831c56-bc54-4a8b-af94-a448f80118e7_1.0.0.0_x64__9etdvjwkeybm6"}
+
     - name: Install UWP App
       run: powershell CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}\CarvedRock.UWP_1.0.0.0_Test\Install.ps1 -Force
       
