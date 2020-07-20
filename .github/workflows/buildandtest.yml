@@ -70,7 +70,7 @@ jobs:
       
     - name: install Win App driver
       uses: actions/setup-node@v1
-    - run: npm install appium-windows-driver
+    - run: npm install -g appium-windows-driver
       
     - name: Run UI tests
       run: vstest.console.exe /Platform:x64  /Tests:CarvedRock.UITests.WindowsUWPTests.CheckMasterDetailAndBack,CarvedRock.UITests.WindowsUWPTests.AddNewItem "CarvedRock\CarvedRock.UITests\bin\Release\netcoreapp3.1\CarvedRock.UITests.dll" /Logger:"trx"
