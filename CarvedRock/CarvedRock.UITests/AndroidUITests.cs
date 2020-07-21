@@ -188,7 +188,7 @@ namespace CarvedRock.UITests
         private AndroidDriver<AppiumWebElement> StartApp()
         {
             System.Environment.SetEnvironmentVariable("ANDROID_HOME", @"C:\Program Files (x86)\Android\android-sdk");
-            System.Environment.SetEnvironmentVariable("JAVA_HOME", @"C:\Program Files\Android\jdk\microsoft_dist_openjdk_1.8.0.25\bin");
+            System.Environment.SetEnvironmentVariable("JAVA_HOME", @"C:\Program Files\Android\jdk\microsoft_dist_openjdk_1.8.0.25");
 
             var capabilities = new AppiumOptions();
             // automatic start of the emulator if not running
