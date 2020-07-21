@@ -51,7 +51,7 @@ namespace CarvedRock.UITests
             Assert.IsTrue(el3 != null);
 
             CreateScreenshot(driver, _ctx);
-            driver.CloseApp();
+            driver.Close();
 
         }
 
@@ -96,7 +96,7 @@ namespace CarvedRock.UITests
             Assert.IsTrue(found);
 
 
-            driver.CloseApp();
+            driver.Close();
 
         }
 
