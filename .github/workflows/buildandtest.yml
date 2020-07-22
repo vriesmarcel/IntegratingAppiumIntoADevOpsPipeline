@@ -80,11 +80,12 @@ jobs:
       with:
         name: published App Package
         path: CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}
+      if: always()
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v1.0.0
       with:
         name: published Test Results UI test
         path: TestResults        
-        
+      if: always()
   
