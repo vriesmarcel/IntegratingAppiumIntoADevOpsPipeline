@@ -1,0 +1,91 @@
+name: Build and Test Apps
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Release]
+
+    runs-on: self-hosted  # For a list of available runner types, refer to 
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      Solution_Name: 'CarvedRock\CarvedRock.sln'                                        # Replace with your solution name, i.e. MyWpfApp.sln.
+      Test_Project_Path: 'CarvedRock.UITests\CarvedRock.UITests.csproj'                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      Wap_Project_Directory: 'CarvedRock\CarvedRock.UWP'                                # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
+      Wap_Project_Path: 'CarvedRock\CarvedRock.UWP\CarvedRock.UWP.csproj'               # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+      buildPlatform: 'x86|x64|ARM'
+      appxPackageDir: 'CarvedRock\AppxPackages\\'
+      signingcertificate: CarvedRock.UWP_TemporaryKey.pfx
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup MSBuild Path
+      uses: warrenbuckley/Setup-MSBuild@v1
+  
+    - name: Setup VSTest.console.exe
+      uses: darenm/Setup-VSTest@v1
+            
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Restore NuGet Packages
+      run: nuget restore ${{env.Solution_Name}}
+      
+    - name: download pfx for signing
+      run: |
+            $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+            $currentDirectory = Get-Location
+            $certificatePath = [System.IO.Path]::Combine($currentDirectory, $env:Wap_Project_Directory, $env:signingcertificate)
+            [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+            Write-Host $certificatePath
+            Write-Host ${{github.workspace}}\${{env.Wap_Project_Directory}}\${{env.signingcertificate}}
+            
+    - name: Build UWP App
+      run: msbuild ${{env.Solution_Name}} /p:Configuration=Release /p:AppxBundlePlatforms="${{env.buildPlatform}}" /p:AppxPackageDir="${{ env.appxPackageDir }}" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload /p:PackageCertificateKeyFile=${{github.workspace}}\${{env.Wap_Project_Directory}}\${{env.signingcertificate}} /p:PackageCertificatePassword=${{secrets.PFX_PWD}}  /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint=""
+ 
+    - name: remove previous installs of app if exists
+      run: |
+            $package =Get-AppxPackageManifest -Package "8b831c56-bc54-4a8b-af94-a448f80118e7_1.0.0.0_x64__9etdvjwkeybm6"
+            if($package -ne $null) 
+            {Remove-AppxPackage -Package "8b831c56-bc54-4a8b-af94-a448f80118e7_1.0.0.0_x64__9etdvjwkeybm6"}
+
+    - name: Install UWP App
+      run: powershell CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}\CarvedRock.UWP_1.0.0.0_Test\Install.ps1 -Force
+      
+    - name: install appium
+      uses: actions/setup-node@v1
+    - run: npm install -g appium
+      
+    - name: install Win App driver
+      uses: actions/setup-node@v1
+    - run: npm install -g appium-windows-driver
+      
+    - name: Run UI tests
+      run: vstest.console.exe /Platform:x64  /Tests:CarvedRock.UITests.WindowsUWPTests.CheckMasterDetailAndBack,CarvedRock.UITests.WindowsUWPTests.AddNewItem,CarvedRock.UITests.AndroidUITests.CheckMasterDetailAndBack,CarvedRock.UITests.AndroidUITests.AddNewItem "CarvedRock\CarvedRock.UITests\bin\Release\netcoreapp3.1\CarvedRock.UITests.dll" /Logger:"trx"
+   
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: published App Package
+        path: CarvedRock\CarvedRock.UWP\${{env.appxPackageDir}}
+      if: always()
+
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: published Test Results UI test
+        path: TestResults        
+      if: always()
+  
