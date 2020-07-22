@@ -183,6 +183,7 @@ namespace CarvedRock.UITests
             var fileName = Guid.NewGuid().ToString() + ".png";
             screenshot.SaveAsFile(fileName);
             _ctx.AddResultFile(fileName);
+            Console.WriteLine($"Created screenshot. Saved file to location: {fileName}");
         }
 
         private AndroidDriver<AppiumWebElement> StartApp()
