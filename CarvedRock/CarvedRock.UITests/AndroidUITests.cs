@@ -61,8 +61,8 @@ namespace CarvedRock.UITests
             var el1 = driver.FindElement(MobileBy.AccessibilityId("Second item"));
             el1.Click();
 
-            //var el2 = driver.FindElement(MobileBy.AccessibilityId("ItemText"));
-            //Assert.IsTrue(el2.Text == "Second item");
+            var el2 = driver.FindElement(MobileBy.AccessibilityId("ItemText"));
+            Assert.IsTrue(el2.Text == "Second item");
 
             driver.PressKeyCode(AndroidKeyCode.Back);
 
